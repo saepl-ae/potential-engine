@@ -499,6 +499,10 @@ function Setup({
   const [draft, setDraft] = useState(settings);
   const txt = t(draft.lang);
 
+  useEffect(() => {
+    setDraft(settings);
+  }, [settings]);
+
   function toggleMode(mode: DeskMode, on: boolean) {
     const enabled = on
       ? Array.from(new Set([...draft.enabledModes, mode]))
@@ -514,6 +518,11 @@ function Setup({
         onSave(draft);
       }}
     >
+      <div className="save-bar">
+        <button className="btn primary" type="submit">
+          {txt.save}
+        </button>
+      </div>
       <label>
         {txt.siteName}
         <input value={draft.siteName} onChange={(e) => setDraft({ ...draft, siteName: e.target.value })} />
@@ -537,7 +546,7 @@ function Setup({
           </select>
         </label>
       </div>
-      <div className="row">
+      <div className="check-row">
         <label>
           <input
             type="checkbox"
